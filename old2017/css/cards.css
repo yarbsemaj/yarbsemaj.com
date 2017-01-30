@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+
+.main-cards{
+width:365px; display:inline-block;
+}
+
+.center{
+	margin-left:auto; margin-right:auto; width:750px;
+}
+
+.card-icon{
+width:365px; position:relative; top: -15px; left: -15px;	
+}
+
+.menbar{
+	position:fixed;
+	height:100%;
+	width:235px;
+	z-index:50;
+	left:-300px;
+}
+.mbar_item{
+	font-size:20px;
+	padding-top:10px;
+	height:50px;
+	padding-left:10px;
+}
+.mbar_item:hover{
+	background-color:rgba(0,0,0,.03);
+}
+.mbar_icon{	
+font-size:25px;
+margin-right:6px;
+margin-left:5px;
+position:relative;
+top:4px;
+}
+
