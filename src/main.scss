@@ -29,22 +29,34 @@ body {
 
 #typewriter {
     font-family: monospace;
-    font-size: 65pt;
+    font-size: 65%;
 }
 
 #name {
     text-align: center;
-    font-size: 100pt;
+    font-size: 100%;
 }
 
 #job {
     text-align: center;
-    font-size: 50pt;
+    font-size: 50%;
 }
 
 #location {
     text-align: center;
-    font-size: 40pt;
+    font-size: 40%;
+}
+
+.title{
+    font-size: 75px;
+}
+@media (max-width: 450px) {
+    .title {
+        font-size: 50px !important;
+    }
+    .links{
+        font-size: 75px;
+    }
 }
 
 a {
