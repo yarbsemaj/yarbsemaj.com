@@ -12,6 +12,7 @@ new Typewriter('#typewriter', {
         'PHP', 
         'SQL', 
         'AWS',
+        '<a href="https://z80.yarbsemaj.com">Z80 Assembly</a>',
         'CSS',
         'SASS',
         'NodeJS', 
@@ -22,8 +23,7 @@ new Typewriter('#typewriter', {
         'Webpack', 
         'AngularJS', 
         'Javascript', 
-        'Java', 
-        'Z80 Assembly'],
+        'Java'],
     autoStart: true,
     loop: true
 });

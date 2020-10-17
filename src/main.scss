@@ -21,44 +21,64 @@ body {
 .links {
     font-size: 100px;
     text-align: center;
+
+    a {
+        text-decoration: none !important;
+        margin-right: 20px;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
 }
 
 .typewriterWrapper {
     text-align: center;
+
+    #typewriter {
+        font-family: monospace;
+        font-size: 65%;
+
+        a {
+
+            &:link,
+            &:visited {
+                color: #e83e8c;
+                text-decoration: none;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
-#typewriter {
-    font-family: monospace;
-    font-size: 65%;
-}
-
-#name {
-    text-align: center;
-    font-size: 100%;
-}
-
-#job {
-    text-align: center;
-    font-size: 50%;
-}
-
-#location {
-    text-align: center;
-    font-size: 40%;
-}
-
-.title{
+.title {
     font-size: 75px;
+
+    #name {
+        text-align: center;
+        font-size: 100%;
+    }
+
+    #job {
+        text-align: center;
+        font-size: 50%;
+    }
+
+    #location {
+        text-align: center;
+        font-size: 40%;
+    }
 }
+
 @media (max-width: 450px) {
     .title {
         font-size: 50px !important;
     }
-    .links{
+
+    .links {
         font-size: 75px;
     }
-}
-
-a {
-    text-decoration: none !important;
 }
