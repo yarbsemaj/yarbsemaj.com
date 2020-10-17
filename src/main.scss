@@ -1,0 +1,52 @@
+@import "~bootswatch/dist/darkly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/darkly/bootswatch";
+
+html {
+    overflow-x: hidden;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+.container {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 100%;
+}
+
+.links {
+    font-size: 100px;
+    text-align: center;
+}
+
+.typewriterWrapper {
+    text-align: center;
+}
+
+#typewriter {
+    font-family: monospace;
+    font-size: 65pt;
+}
+
+#name {
+    text-align: center;
+    font-size: 100pt;
+}
+
+#job {
+    text-align: center;
+    font-size: 50pt;
+}
+
+#location {
+    text-align: center;
+    font-size: 40pt;
+}
+
+a {
+    text-decoration: none !important;
+}
