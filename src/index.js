@@ -25,4 +25,5 @@ new Typewriter('#typewriter', {
         'Java', 
         'Z80 Assembly'],
     autoStart: true,
+    loop: true
 });
