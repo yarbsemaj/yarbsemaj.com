@@ -1,6 +1,7 @@
 @import "~bootswatch/dist/darkly/variables";
 @import "~bootstrap/scss/bootstrap";
 @import "~bootswatch/dist/darkly/bootswatch";
+@import "~fontsource-courier-prime/index.css";
 
 html {
     overflow-x: hidden;
@@ -36,9 +37,8 @@ body {
     text-align: center;
 
     #typewriter {
-        font-family: monospace;
+        font-family: "Courier Prime";
         font-size: 65%;
-
         a {
 
             &:link,
