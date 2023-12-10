@@ -5,7 +5,6 @@ node_modules
 /package
 .serverless
 
-*.js
 !jest.config.js
 *.d.ts
 

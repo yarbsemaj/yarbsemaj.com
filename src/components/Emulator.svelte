@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	import { Screen } from '../emu/component/Screen';
-	import { ZCore, type ROM } from '../emu/component/ZCore';
+	import { HAL, type ROM } from '../emu/component/HAL';
 
 	import root from '../roms/root.cim';
 
@@ -13,30 +13,29 @@
 	import banner from '../roms/banner.cim';
 	import connect4 from '../roms/connect4.cim';
 	import life from '../roms/life.cim';
+	import { romLoaded } from './store/store';
 
-	let theComputer: ZCore;
+	let theComputer: HAL;
 	let screen: Screen;
 	export let canvas: HTMLCanvasElement;
 	let keyboardActive = false;
 	let loop: NodeJS.Timer;
 
 	let roms = [
-		{ name: 'PUC', start: 0x9000, size: 0x3000, uri: puc },
-		{ name: 'Minesweeper', start: 0x9000, size: 0x3000, uri: minesweper },
-		{ name: 'Snake', start: 0x9000, size: 0x3000, uri: snake },
-		{ name: 'Image', start: 0x9000, size: 0x3000, uri: image },
-		{ name: 'Banner', start: 0x9000, size: 0x3000, uri: banner },
-		{ name: 'Connect4', start: 0x9000, size: 0x3000, uri: connect4 },
-		{ name: 'Life', start: 0x9000, size: 0x3000, uri: life }
+		{ name: 'PUC', start: 0x9000, uri: puc },
+		{ name: 'Minesweeper', start: 0x9000, uri: minesweper },
+		{ name: 'Snake', start: 0x9000, uri: snake },
+		{ name: 'Image', start: 0x9000, uri: image },
+		{ name: 'Banner', start: 0x9000, uri: banner },
+		{ name: 'Connect4', start: 0x9000, uri: connect4 },
+		{ name: 'Life', start: 0x9000, uri: life }
 	];
 
 	export const emulator = {
 		reset() {
 			theComputer.cpu.reset();
 		},
-		init() {
-			theComputer.cpu.reset();
-			screen.clear();
+		async init() {
 			setTimeout(async () => {
 				//Get Rom from hash
 				const romName = window.location.hash?.substring(1);
@@ -63,7 +62,7 @@
 			}, 600);
 		},
 		loadRom(rom: ROM) {
-			theComputer.mmap.addROM(rom.name, rom.start, rom.size, rom.uri).then(()=>{
+			theComputer.memory.addROM( rom.start, rom.uri).then(()=>{
 				theComputer.cpu.reset();
 				//Give time for the CPU to reset
 				setTimeout(() => {
@@ -136,15 +135,18 @@
 		let emuConfig = {
 			updateInterval: 1, // ms tick interval
 			numCyclesPerTick: 7372 * 3.5, // clock cycles per interval we have to multiply this by 3.5 to match speed for some reason
-			peripherals: {
-				ROM: [{ name: '8k ROM 0', start: 0x0000, size: 0x2000, uri: root }]
-			},
+			roms: [{ name: '8k ROM 0', start: 0x0000, uri: root }],
 			sendOutput: (text: string) => screen.newChar(text)
 		};
 
 		screen.clear();
 		loop = setInterval(() => screen.draw(), 67);
-		theComputer = new ZCore(emuConfig);
+		theComputer = new HAL(emuConfig);
+		await theComputer.setupMemory();
+		screen.clear();
+		theComputer.cpu.reset();
+		theComputer.go();
+		romLoaded.set(true)
 	});
 
 	const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));

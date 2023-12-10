@@ -1,13 +1,14 @@
 <script lang="ts">
 	import * as THREE from 'three';
-	import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';4
+	import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+	4;
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 	import { CrtShader } from '../threed/crtShader';
 	import { browser } from '$app/environment';
 	import Emulator from '../components/Emulator.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import Loader from './loader/Loader.svelte';
-	import { screenColorHex } from './store/store';
+	import { screenColorHex, romLoaded } from './store/store';
 
 	let screenColor: number;
 
@@ -26,7 +27,13 @@
 
 	let animationFrame: number;
 
-	let loaded = false;
+	let modelLoaded = false;
+
+	let romLoading = false;
+
+	romLoaded.subscribe((value) => {
+		romLoading = value;
+	});
 
 	if (browser) {
 		emuCanvas = document.createElement('canvas');
@@ -40,7 +47,7 @@
 			opacity = 1 - ((y - canvas.clientHeight) * scaleFactor) / canvas.clientHeight;
 			blur = ((y - canvas.clientHeight) * scaleFactor * 8) / canvas.clientHeight;
 			if (opacity < 0.3) opacity = 0.3;
-			if (blur > 5) blur = 5;			
+			if (blur > 5) blur = 5;
 		} else {
 			blur = 0;
 			opacity = 1;
@@ -118,7 +125,7 @@
 
 		dloader.preload();
 		const loader = new GLTFLoader();
-		loader.setDRACOLoader(dloader)
+		loader.setDRACOLoader(dloader);
 
 		loader.load('/retro_computer_compressed.glb', (gltf) => {
 			gltf.scene.children[2].material = material;
@@ -129,8 +136,7 @@
 			screenSpot.target.position.set(0.0025, 0.0025, 0);
 			model.add(screenSpot.target);
 			animate(model);
-			loaded = true;
-			emulator.init();
+			modelLoaded = true;
 			onScroll();
 		});
 		renderer.setSize(window.innerWidth, canvas.clientHeight);
@@ -165,9 +171,10 @@
 			renderer.render(scene, camera);
 		}
 	});
+	$: if (modelLoaded && romLoading) {emulator.init();}
 </script>
 
-{#if !loaded}
+{#if !modelLoaded || !romLoading}
 	<div class="fixed z-20 top-0 left-0 bottom-0 right-0 bg-black flex justify-center items-center">
 		<Loader />
 	</div>
