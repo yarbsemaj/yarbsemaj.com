@@ -60,7 +60,6 @@
 				<Fa icon={faLinkedin} />
 			</a>
 			<a
-				data-sveltekit-preload-data="hover"
 				class="sm:text-8xl text-6xl p-4"
 				aria-label="Blog"
 				href="/blog"
