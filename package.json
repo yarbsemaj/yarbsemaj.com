@@ -54,7 +54,7 @@
     "graphql-request": "^4.3.0",
     "highlight.js": "^11.2.0",
     "hsl-to-hex": "^1.0.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^9.0.0",
     "pixi.js": "^6.5.1",
     "sass": "^1.54.3",
     "siema": "^1.5.1",
