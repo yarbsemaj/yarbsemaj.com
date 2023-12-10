@@ -1,2 +1,17 @@
+.DS_Store
 node_modules
-dist
+/build
+/.svelte-kit
+/package
+.serverless
+
+*.js
+!jest.config.js
+*.d.ts
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+.env
+cdk.context.json
+
