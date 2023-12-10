@@ -75,7 +75,8 @@ export class CdkStack extends cdk.Stack {
       destinationBucket: staticAssets,
       prune: false,
       cacheControl: [
-        cdk.aws_s3_deployment.CacheControl.maxAge(Duration.hours(1)),
+        cdk.aws_s3_deployment.CacheControl.maxAge(Duration.days(365)),
+        cdk.aws_s3_deployment.CacheControl.immutable(),
       ],
     });
 
