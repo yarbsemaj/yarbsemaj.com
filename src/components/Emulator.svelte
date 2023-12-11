@@ -2,10 +2,8 @@
 	import { onDestroy, onMount } from 'svelte';
 
 	import { Screen } from '../emu/component/Screen';
-	import { HAL, type ROM } from '../emu/component/HAL';
-
-	import root from '../roms/root.cim';
-
+	import { type ROM } from '../emu/component/HAL';
+	import EmulatorWorker from '../workers/emulator?worker'
 	import puc from '../roms/puc.cim';
 	import minesweper from '../roms/minesweeper.cim';
 	import snake from '../roms/snake.cim';
@@ -14,12 +12,14 @@
 	import connect4 from '../roms/connect4.cim';
 	import life from '../roms/life.cim';
 	import { romLoaded } from './store/store';
+	import { RXType, TXType, type TXMessage } from '../workers/emulator';
 
-	let theComputer: HAL;
 	let screen: Screen;
 	export let canvas: HTMLCanvasElement;
 	let keyboardActive = false;
 	let loop: NodeJS.Timer;
+
+	let worker : Worker
 
 	let roms = [
 		{ name: 'PUC', start: 0x9000, uri: puc },
@@ -33,7 +33,7 @@
 
 	export const emulator = {
 		reset() {
-			theComputer.cpu.reset();
+			worker.postMessage({action: RXType.RESET})
 		},
 		async init() {
 			setTimeout(async () => {
@@ -51,7 +51,7 @@
 						await timer(1000);
 						continue;
 					}
-					theComputer.addToKeyboardBuffer(char);
+					addToKeyboardBuffer(char);
 					await timer(Math.floor(Math.random() * 300));
 				}
 
@@ -62,14 +62,7 @@
 			}, 600);
 		},
 		loadRom(rom: ROM) {
-			theComputer.memory.addROM( rom.start, rom.uri).then(()=>{
-				theComputer.cpu.reset();
-				//Give time for the CPU to reset
-				setTimeout(() => {
-					theComputer.addToKeyboardBuffer('E9000\n');
-					keyboardActive = true;
-				}, 50);
-			});
+			worker.postMessage({action: RXType.LOAD_ROM, data: rom})
 		},
 		loadRomByName(name: string){
 			let rom = roms.find((rom) => name.toLocaleLowerCase() == rom.name.toLocaleLowerCase());
@@ -84,10 +77,14 @@
 		if (!keyboardActive) {
 			return;
 		}
-		theComputer.addToKeyboardBuffer(character);
+		addToKeyboardBuffer(character);
 		if (character.charCodeAt(0) == 10) {
-			theComputer.addToKeyboardBuffer('\r');
+			addToKeyboardBuffer('\r');
 		}
+	}
+
+	function addToKeyboardBuffer(char: string){
+		worker.postMessage({action: RXType.SEND_CHAR, data: char})
 	}
 	function onkeypress(event: KeyboardEvent) {
 		event.preventDefault();
@@ -121,32 +118,41 @@
 			screen.colour = { ...Screen.defaultConsoleColour };
         	screen.showCursor = true;
 			screen.clear();
-			theComputer.cpu.reset();
+			emulator.reset();
 		}
 	}
 
 
 	onDestroy(() => {
 		clearInterval(loop);
+		worker?.terminate()
 	});
 
 	onMount(async () => {
+		worker = new EmulatorWorker;
+		worker.onmessage = async (e: MessageEvent<TXMessage>) =>{
+			switch(e.data.action){
+				case TXType.OUTPUT_CHAR:
+					screen.newChar(e.data.data)
+					break;
+				case TXType.INIT:
+					screen.clear();
+					romLoaded.set(true);
+				break;	
+				case TXType.ROM_LOADED:
+					//Give time for the CPU to reset
+					emulator.reset()
+					screen.clear();
+					setTimeout(() => {
+						addToKeyboardBuffer('E9000\n');
+						keyboardActive = true;
+				}, 50);
+			}
+		}
 		screen = new Screen(70, 33, canvas, emulator.loadRomByName);
-		let emuConfig = {
-			updateInterval: 1, // ms tick interval
-			numCyclesPerTick: 7372 * 3.5, // clock cycles per interval we have to multiply this by 3.5 to match speed for some reason
-			roms: [{ name: '8k ROM 0', start: 0x0000, uri: root }],
-			sendOutput: (text: string) => screen.newChar(text)
-		};
-
-		screen.clear();
 		loop = setInterval(() => screen.draw(), 67);
-		theComputer = new HAL(emuConfig);
-		await theComputer.setupMemory();
-		screen.clear();
-		theComputer.cpu.reset();
-		theComputer.go();
-		romLoaded.set(true)
+
+		worker.postMessage({action: RXType.INIT})
 	});
 
 	const timer = (ms: number) => new Promise((res) => setTimeout(res, ms));
