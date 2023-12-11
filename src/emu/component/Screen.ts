@@ -85,6 +85,7 @@ export class Screen {
         this.colour = { ...Screen.defaultConsoleColour };
         this.escapeSequenceBuilder = "";
         this.showCursor = true;
+        this.clear()
     }
 
     clear() {
