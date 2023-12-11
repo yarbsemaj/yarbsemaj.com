@@ -1,5 +1,5 @@
 <script>
-	import { addAlert } from '../../../stores/alerts.js';
+	import { addAlert } from '../../../stores/alerts';
 	import { goto } from '$app/navigation';
 
 	let form = {
