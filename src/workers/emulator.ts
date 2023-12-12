@@ -7,8 +7,6 @@ export enum TXType {
     OUTPUT_CHAR
 }
 
-
-
 export enum RXType {
     INIT,
     RESET,
@@ -16,14 +14,40 @@ export enum RXType {
     SEND_CHAR
 }
 
-export type RXMessage = {
-    action: RXType,
-    data?: string | ROM
+export type RXMessage = RX_INIT | RX_RESET | RX_LOAD_ROM | RX_SEND_CHAR
+
+type RX_INIT = {
+    action: RXType.INIT,
 }
 
-export type TXMessage = {
-    action: TXType,
-    data?: string
+type RX_RESET = {
+    action: RXType.RESET,
+}
+
+type RX_LOAD_ROM = {
+    action: RXType.LOAD_ROM,
+    data: ROM
+}
+
+type RX_SEND_CHAR = {
+    action: RXType.SEND_CHAR,
+    data: string
+}
+
+
+export type TXMessage = TX_INIT | TX_OUTPUT_CHAR | TX_ROM_LOADED
+
+type TX_INIT = {
+    action: TXType.INIT,
+}
+
+type TX_ROM_LOADED = {
+    action: TX_ROM_LOADED,
+}
+
+type TX_OUTPUT_CHAR = {
+    action: TX_OUTPUT_CHAR,
+    data: string
 }
 
 

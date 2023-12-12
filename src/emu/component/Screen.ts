@@ -121,7 +121,8 @@ connect4    :- Fun for 2\n`
 
         if (command === 'help') {
             let message = `ls           :- List programs to load
-load "name"  :- Load a program by "name"\n`
+load <name>  :- Load a program by "name"\n
+type E 0100 to return to return to basic after exiting a program\n`
             message.split('').forEach((char) => this.newChar(char))
             return true
         }
