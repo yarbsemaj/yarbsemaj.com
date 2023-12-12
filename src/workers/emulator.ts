@@ -42,11 +42,11 @@ type TX_INIT = {
 }
 
 type TX_ROM_LOADED = {
-    action: TX_ROM_LOADED,
+    action: TXType.ROM_LOADED,
 }
 
 type TX_OUTPUT_CHAR = {
-    action: TX_OUTPUT_CHAR,
+    action: TXType.OUTPUT_CHAR
     data: string
 }
 
