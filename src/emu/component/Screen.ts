@@ -113,7 +113,7 @@ export class Screen {
         if (command === 'ls') {
             let message = `\npuc         :- A maze chase game
 minesweeper :- An explosive puzzle
-snake       :- Party like its 1999
+snake       :- Party like it's 1999
 connect4    :- Fun for 2\n`
             message.split('').forEach((char) => this.newChar(char))
             return true
