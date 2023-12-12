@@ -30,6 +30,8 @@
 	<title>James Bray</title>
 	<meta name="description" content="Full Stack Software Developer working in Manchester" />
 	<meta name="og:image" content="https://yarbsemaj.com/img/og-image.jpeg" />
+	<link rel="preload" as="image" href="/img/loader.webp">
+	<link rel="preload" as="font" type="font/woff2" href="/fonts/Windows-Command-Prompt.woff2" crossorigin="anonymous">
 </svelte:head>
 
 <ThreeD />
