@@ -11,6 +11,7 @@
 	import banner from '../roms/banner.cim';
 	import connect4 from '../roms/connect4.cim';
 	import life from '../roms/life.cim';
+	import threed from '../roms/threed.cim';
 	import { romLoaded } from './store/store';
 	import { RXType, TXType, type TXMessage } from '../workers/emulator';
 
@@ -28,7 +29,8 @@
 		{ name: 'Image', start: 0x9000, uri: image },
 		{ name: 'Banner', start: 0x9000, uri: banner },
 		{ name: 'Connect4', start: 0x9000, uri: connect4 },
-		{ name: 'Life', start: 0x9000, uri: life }
+		{ name: 'Life', start: 0x9000, uri: life },
+		{ name: 'threed', start: 0x9000, uri: threed }
 	];
 
 	export const emulator = {

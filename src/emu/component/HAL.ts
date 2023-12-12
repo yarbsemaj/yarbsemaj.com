@@ -98,8 +98,8 @@ export class HAL {
     go() {
         clearInterval(this.interval);
 
-        var self = this;
-        this.interval = setInterval(function () {
+        let self = this;
+        this.interval = setInterval(() => {
             self.tick();
         }, this.emuConfig.updateInterval);
     }
