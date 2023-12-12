@@ -158,10 +158,21 @@
 			screenSpot.color.set(screenColor);
 
 			const boundedScrollY = y > canvas.clientHeight ? canvas.clientHeight : y;
-			let baseZ = window.innerWidth > 1200 ? 2 : 6;
-			const zscale = window.innerWidth > 1200 ? 4 : 7;
+			let baseZ: number, zscale: number, baseY: number
 
-			const baseY = window.innerWidth > 1200 ? 0.00235 : 0;
+			if(window.innerWidth > 1200){
+				baseZ = 2
+				zscale = 4
+				baseY =  0.00235
+			} else if(window.innerWidth > 768){
+				baseZ = 4
+				zscale = 5.5
+				baseY =  0
+			} else{
+				baseZ = 6
+				zscale = 6
+				baseY =  0
+			}
 
 			camera.position.z = baseZ + (boundedScrollY / canvas.clientHeight) * zscale;
 			camera.position.y = baseY - boundedScrollY / canvas.clientHeight / 500;

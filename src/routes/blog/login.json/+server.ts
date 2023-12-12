@@ -48,26 +48,26 @@ function auth(uname: string, password: string): Promise<string> {
 	let ClientId = env.CLIENT_ID
 	let UserPoolId = env.USER_POOL_ID
 	let region = 'eu-west-2'
-	var authenticationData = {
+	let authenticationData = {
 		Username: uname,
 		Password: password,
 	};
 	AWS.config.region = region;
-	var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
-	var poolData = {
+	let authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+	let poolData = {
 		UserPoolId,
 		ClientId
 	};
-	var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-	var userData = {
+	let userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+	let userData = {
 		Username: uname,
 		Pool: userPool,
 	};
-	var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+	let cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
 	return new Promise((resolve, reject) => {
 		cognitoUser.authenticateUser(authenticationDetails, {
 			onSuccess: function (result) {
-				var accessToken = result.getAccessToken().getJwtToken();
+				let accessToken = result.getAccessToken().getJwtToken();
 				return resolve(accessToken);
 			},
 

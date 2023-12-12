@@ -1,7 +1,7 @@
 import { screenColorHex } from "../../components/store/store";
 
 
-const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life']
+const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life', 'threed']
 
 export class Screen {
     static black = "#000000";
@@ -85,6 +85,7 @@ export class Screen {
         this.colour = { ...Screen.defaultConsoleColour };
         this.escapeSequenceBuilder = "";
         this.showCursor = true;
+        this.clear()
     }
 
     clear() {
@@ -110,7 +111,7 @@ export class Screen {
 
     private parseCommand(command: string) {
         if (command === 'ls') {
-            let message = `puc         :- A maze chase game
+            let message = `\npuc         :- A maze chase game
 minesweeper :- An explosive puzzle
 snake       :- Party like its 1999
 connect4    :- Fun for 2\n`
@@ -119,8 +120,9 @@ connect4    :- Fun for 2\n`
         }
 
         if (command === 'help') {
-            let message = `ls           :- List programs to load
-load "name"  :- Load a program by "name"\n`
+            let message = `\nls           :- List programs to load
+load <name>  :- Load a program by "name"\n
+type E 0100 to return to return to basic after exiting a program\n`
             message.split('').forEach((char) => this.newChar(char))
             return true
         }
@@ -315,17 +317,17 @@ load "name"  :- Load a program by "name"\n`
 }
 
 function hexToRgb(hex: string) {
-    var bigint = parseInt(hex.replace('#', ''), 16);
-    var r = (bigint >> 16) & 255;
-    var g = (bigint >> 8) & 255;
-    var b = bigint & 255;
+    let bigint = parseInt(hex.replace('#', ''), 16);
+    let r = (bigint >> 16) & 255;
+    let g = (bigint >> 8) & 255;
+    let b = bigint & 255;
 
     return { r, g, b };
 }
 
 function rgbToHex(r: number, g: number, b: number) {
     const c = (v: number) => {
-        var hex = Math.floor(v).toString(16);
+        let hex = Math.floor(v).toString(16);
         return hex.length === 1 ? "0" + hex : hex;
     }
     return parseInt(c(r) + c(g) + c(b), 16);
