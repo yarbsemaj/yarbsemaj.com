@@ -1,7 +1,16 @@
 import { screenColorHex } from "../../components/store/store";
-
+import welcome from "./screen-images/welcome.png"
+import about1 from "./screen-images/about1.png"
+import about2 from "./screen-images/about2.png"
+import about3 from "./screen-images/about3.jpeg"
+import about4 from "./screen-images/about4.png"
 
 const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life', 'threed']
+
+export type AboutSlide = {
+    image: HTMLImageElement
+    lightColor: number
+}
 
 export class Screen {
     static black = "#000000";
@@ -56,6 +65,8 @@ export class Screen {
     escapeSequenceBuilder: string
     showCursor: boolean
     welcome: HTMLImageElement
+    about: AboutSlide[]
+    aboutSlide: number
     displayWelcome: boolean
     commandBuffer: string
     loadRom: (romName: string) => void
@@ -63,8 +74,42 @@ export class Screen {
 
     constructor(width: number, height: number, element: HTMLCanvasElement, loadRom: (romName: string) => void) {
         this.welcome = new Image();
-        this.welcome.src = '/img/welcome-screen-stretch.png';
+        this.welcome.src = welcome;
+
+        const about1Image = new Image()
+        about1Image.src = about1
+
+        const about2Image = new Image()
+        about2Image.src = about2
+
+        const about3Image = new Image()
+        about3Image.src = about3
+
+        const about4Image = new Image()
+        about4Image.src = about4
+
+        this.about = [
+            {
+                image: about1Image,
+                lightColor: 0x00aa00
+            },
+            {
+                image: about2Image,
+                lightColor: 0x00aa00
+            },
+            {
+                image: about3Image,
+                lightColor: 0x75757b
+            },
+            {
+                image: about4Image,
+                lightColor: 0x00aa00
+            }
+        ]
+
+
         this.displayWelcome = false
+        this.aboutSlide = 0
 
         this.loadRom = loadRom
         let scale = 1
@@ -121,9 +166,26 @@ connect4    :- Fun for 2\n`
 
         if (command === 'help') {
             let message = `\nls           :- List programs to load
-load <name>  :- Load a program by "name"\n
+load <name>  :- Load a program by "name"
+about        :- About the computer \n
 type E 0100 to return to return to basic after exiting a program\n`
             message.split('').forEach((char) => this.newChar(char))
+            return true
+        }
+
+        if(command === 'about'){
+            this.aboutSlide = 1
+            //add keyboard listener
+            const aboutKeyboardListener = (event: KeyboardEvent)=>{
+                event.preventDefault()
+                this.aboutSlide ++
+                if(this.aboutSlide-1 === this.about.length){
+                    this.aboutSlide = 0
+                    window.removeEventListener('keydown', aboutKeyboardListener)
+                }
+
+            }
+            window.addEventListener('keydown', aboutKeyboardListener)
             return true
         }
 
@@ -282,6 +344,15 @@ type E 0100 to return to return to basic after exiting a program\n`
             screenColorHex.set(0x00aa00)
             return
         }
+
+
+        if (this.aboutSlide) {
+            const slide = this.about[this.aboutSlide-1]
+            this.canvas.drawImage(slide.image, offset, offset)
+            screenColorHex.set(slide.lightColor)
+            return
+        }
+
         let now = new Date();
         //First draw the background, we have to spit this out so we don't get overdraw
         for (let row = 0; row < this.height; row++) {
