@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ThreeD from '../components/ThreeD.svelte';
-	import type { TypedItem } from '../components/typewriter/types';
-	import Typewriter from '../components/typewriter/Typewriter.svelte';
+	import type { TypedItem } from '../../components/typewriter/types';
+	import Typewriter from '../../components/typewriter/Typewriter.svelte';
+	import background from './old-browser.jpeg'
 
 	import Fa from 'svelte-fa';
 	import { faLaptopCode } from '@fortawesome/free-solid-svg-icons';
@@ -29,8 +29,8 @@
 
 	onMount(()=>{
 		check_webp_feature('lossy', (feature, supported)=>{
-			if(!supported){
-				window.location.href = '/old-browser'
+			if(supported){
+				window.location.href = '/'
 			}
 		})
 	})
@@ -40,17 +40,12 @@
 	<title>James Bray</title>
 	<meta name="description" content="Full Stack Software Developer working in Manchester" />
 	<meta name="og:image" content="https://yarbsemaj.com/img/og-image.jpeg" />
-	<link rel="preload" as="image" href="/img/loader.webp" />
-	<link
-		rel="preload"
-		as="font"
-		type="font/woff2"
-		href="/fonts/Windows-Command-Prompt.woff2"
-		crossorigin="anonymous"
-	/>
+	<meta name="robots" content="noindex">
 </svelte:head>
 
-<ThreeD />
+<div class="h-screen w-screen flex flex-col justify-center items-center z-10 absolute blur opacity-50">
+	<img alt='background' src={background} />
+</div>
 
 <div class="h-screen flex flex-col justify-center items-center z-10 relative">
 	<div class="text-center px-2">
@@ -77,14 +72,17 @@
 			>
 				<Fa icon={faLinkedin} />
 			</a>
-			<a class="sm:text-8xl text-6xl p-4" aria-label="Blog" href="/blog">
+			<a
+				class="sm:text-8xl text-6xl p-4"
+				aria-label="Blog"
+				href="/blog"
+			>
 				<Fa icon={faLaptopCode} />
 			</a>
 		</div>
 	</div>
-	<div class="text-center text-sm pb-2 absolute bottom-0 text-gray-400">
-		<a class="underline" href="https://skfb.ly/ou69O">Retro computer model by Urpo, </a> modify by James
-		Bray
+	<div class="text-center text-sm pb-2 absolute bottom-0">
+		Visit this page on a modern browser for additional features.
 	</div>
 </div>
 

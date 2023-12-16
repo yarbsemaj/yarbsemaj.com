@@ -14,7 +14,7 @@
 	<div class={`grid place-items-center h-fit overlay rounded-3xl ${status === 'draft' ? 'bg-amber-200' : 'bg-white'} border-solid h-fit w-full mb-9 inline-block`}>
 		<div style="background-image: url('{image}');" class="rounded-t-3xl card-img-top w-full" alt={title} />
 		<div class="flex-auto py-6 px-1">
-			<h4 class="text-3xl">{title}</h4>
+			<div class="text-3xl">{title}</div>
 			<p class="">
 				{description}
 			</p>
