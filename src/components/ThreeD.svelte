@@ -158,31 +158,35 @@
 			screenSpot.color.set(screenColor);
 
 			const boundedScrollY = y > canvas.clientHeight ? canvas.clientHeight : y;
-			let baseZ: number, zscale: number, baseY: number
+			let baseZ: number, zscale: number, baseY: number;
 
-			if(window.innerWidth > 1200){
-				baseZ = 2
-				zscale = 4
-				baseY =  0.00235
-			} else if(window.innerWidth > 768){
-				baseZ = 4
-				zscale = 5.5
-				baseY =  0
-			} else{
-				baseZ = 6
-				zscale = 6
-				baseY =  0
+			if (window.innerWidth > 1200) {
+				baseZ = 2;
+				zscale = 4;
+				baseY = 0.00235;
+			} else if (window.innerWidth > 768) {
+				baseZ = 4;
+				zscale = 5.5;
+				baseY = 0;
+			} else {
+				baseZ = 6;
+				zscale = 6;
+				baseY = 0;
 			}
 
-			camera.position.z = baseZ + (boundedScrollY / canvas.clientHeight) * zscale;
-			camera.position.y = baseY - boundedScrollY / canvas.clientHeight / 500;
+			const scrollPos = boundedScrollY / canvas.clientHeight;
 
-			gltf.rotation.y = 4.7 - boundedScrollY / canvas.clientHeight;
+			camera.position.z = baseZ + scrollPos * zscale;
+			camera.position.y = baseY - scrollPos / 500;
+
+			gltf.rotation.y = 4.7 - scrollPos;
 
 			renderer.render(scene, camera);
 		}
 	});
-	$: if (modelLoaded && romLoading) {emulator.init();}
+	$: if (modelLoaded && romLoading) {
+		emulator.init();
+	}
 </script>
 
 {#if !modelLoaded || !romLoading}
