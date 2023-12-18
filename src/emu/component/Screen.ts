@@ -12,6 +12,9 @@ export type AboutSlide = {
     lightColor: number
 }
 
+const CHAR_WIDTH = 10
+const CHAR_HEIGHT = 16
+
 export class Screen {
     static black = "#000000";
     static red = "#800000";
@@ -359,7 +362,7 @@ type E 0100 to return to return to basic after exiting a program\n`
             for (let col = 0; col < this.width; col++) {
                 let char = this.screenBuffer[row][col] || Screen.defaultChar;
                 this.canvas.fillStyle = char.colour.bg
-                this.canvas.fillRect(((col + 1) * 10 - 10) + offset, (row * 16) + offset, 10, 16);
+                this.canvas.fillRect(((col + 1) * CHAR_WIDTH - CHAR_WIDTH) + offset, (row * CHAR_HEIGHT) + offset, CHAR_WIDTH, CHAR_HEIGHT);
             }
         }
         //Now the foreground and cursor
@@ -368,7 +371,7 @@ type E 0100 to return to return to basic after exiting a program\n`
                 let char = this.screenBuffer[row][col] || Screen.defaultChar;
                 this.canvas.fillStyle = char.colour.fg
                 if (this.cursor.y == row && this.cursor.x == col && this.showCursor && Math.round(now.getTime() / 1000) % 2) {
-                    this.canvas.fillRect(((col + 1) * 10 - 10) + offset, (row * 16 + 4) + offset, 10, 16);
+                    this.canvas.fillRect(((col + 1) * CHAR_WIDTH - CHAR_WIDTH) + offset, (row * CHAR_HEIGHT + 4) + offset, CHAR_WIDTH, CHAR_HEIGHT);
                 }
                 if (char.txt) {
                     const rgb = hexToRgb(char.colour.fg)
@@ -377,7 +380,7 @@ type E 0100 to return to return to basic after exiting a program\n`
                     screenColour.g += rgb.g
 
                     this.canvas.fillStyle = char.colour.fg
-                    this.canvas.fillText(char.txt, (col * 10) + offset, ((row + 1) * 16) + offset);
+                    this.canvas.fillText(char.txt, (col * CHAR_WIDTH) + offset, ((row + 1) * CHAR_HEIGHT) + offset);
                 }
             }
         }
