@@ -39,6 +39,12 @@
 		emuCanvas = document.createElement('canvas');
 	}
 
+	export const inputKey = (key: string) => {
+		if (emulator) {
+			emulator.inputChar(key);
+		}
+	};
+
 	const onScroll = () => {
 		canvasPosition = 'fixed';
 		top = 0;
