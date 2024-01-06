@@ -32,7 +32,7 @@
 		{ name: 'Connect4', start: 0x9000, uri: connect4 },
 		{ name: 'Life', start: 0x9000, uri: life },
 		{ name: 'threed', start: 0x9000, uri: threed },
-		{ name: 'paint', start: 0x9000, uri: paint }
+		{ name: 'zpaint', start: 0x9000, uri: paint }
 	];
 
 	export const emulator = {

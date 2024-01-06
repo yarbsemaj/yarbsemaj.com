@@ -5,7 +5,7 @@ import about2 from "./screen-images/about2.png"
 import about3 from "./screen-images/about3.jpeg"
 import about4 from "./screen-images/about4.png"
 
-const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life', 'threed', 'paint']
+const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life', 'threed', 'zpaint']
 
 export type AboutSlide = {
     image: HTMLImageElement
@@ -162,7 +162,8 @@ export class Screen {
             let message = `\npuc         :- A maze chase game
 minesweeper :- An explosive puzzle
 snake       :- Party like it's 1999
-connect4    :- Fun for 2\n`
+connect4    :- Fun for 2
+zpaint      :- A art program\n`
             message.split('').forEach((char) => this.newChar(char))
             return true
         }
