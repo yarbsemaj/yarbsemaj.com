@@ -4,10 +4,15 @@
 	import Typewriter from '../components/typewriter/Typewriter.svelte';
 
 	import Fa from 'svelte-fa';
-	import { faLaptopCode } from '@fortawesome/free-solid-svg-icons';
+	import { faLaptopCode, faKeyboard } from '@fortawesome/free-solid-svg-icons';
 	import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 	import { onMount } from 'svelte';
 	import { check_webp_feature } from '$lib/utils';
+	import Keyboard from '../components/keyboard/Keyboard.svelte';
+
+	let inputKey: (key: string) => void;
+
+	let showKeyboard = false;
 
 	let typedLines: Array<TypedItem> = [
 		{ text: 'React' },
@@ -27,13 +32,13 @@
 		{ text: 'Tailwindcss' }
 	];
 
-	onMount(()=>{
-		check_webp_feature('lossy', (feature, supported)=>{
-			if(!supported){
-				window.location.href = '/old-browser'
+	onMount(() => {
+		check_webp_feature('lossy', (feature, supported) => {
+			if (!supported) {
+				window.location.href = '/old-browser';
 			}
-		})
-	})
+		});
+	});
 </script>
 
 <svelte:head>
@@ -50,7 +55,33 @@
 	/>
 </svelte:head>
 
-<ThreeD />
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
+	on:click={() => {
+		showKeyboard = !showKeyboard;
+	}}
+>
+	<ThreeD bind:inputKey />
+</div>
+<div
+	class="bg-black z-20 fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-between {showKeyboard
+		? 'block md:hidden'
+		: 'hidden'}"
+>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div
+		class="pt-10"
+		id="emuScreen"
+		on:click={() => {
+			showKeyboard = !showKeyboard;
+		}}
+	/>
+	<div class="">
+		{#if showKeyboard}
+			<Keyboard keyPress={inputKey} />
+		{/if}
+	</div>
+</div>
 
 <div class="h-screen flex flex-col justify-center items-center z-10 relative">
 	<div class="text-center px-2">
@@ -67,7 +98,11 @@
 		</div>
 
 		<div class="flex justify-center sm:gap-10 gap-2">
-			<a aria-label="Github" class="sm:text-8xl text-6xl p-4" href="https://github.com/yarbsemaj">
+			<a
+				aria-label="Github"
+				class="sm:text-8xl text-6xl p-4"
+				href="https://github.cnpm run deom/yarbsemaj"
+			>
 				<Fa icon={faGithub} />
 			</a>
 			<a
