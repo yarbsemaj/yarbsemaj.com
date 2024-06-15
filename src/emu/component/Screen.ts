@@ -120,8 +120,7 @@ export class Screen {
         const widthPx = 709
         const heightPx = 530
         let ctx = this.canvasElement.getContext("2d") as CanvasRenderingContext2D;
-        this.canvasElement.style.width = widthPx + "px";
-        this.canvasElement.style.height = heightPx + "px";
+        this.canvasElement.style.width = 100 + "vw";
         this.canvasElement.width = Math.floor(widthPx * scale);
         this.canvasElement.height = Math.floor(heightPx * scale);
         ctx.scale(scale, scale)

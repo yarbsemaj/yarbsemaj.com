@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as THREE from 'three';
 	import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-	4;
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 	import { CrtShader } from '../threed/crtShader';
 	import { browser } from '$app/environment';
@@ -192,6 +191,7 @@
 	});
 	$: if (modelLoaded && romLoading) {
 		emulator.init();
+		document.getElementById('emuScreen').appendChild(emuCanvas)
 	}
 </script>
 
