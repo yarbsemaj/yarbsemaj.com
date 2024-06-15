@@ -115,11 +115,11 @@ export class Screen {
         this.aboutSlide = 0
 
         this.loadRom = loadRom
-        let scale = 1
+        const scale = 1
         this.canvasElement = element;
         const widthPx = 709
         const heightPx = 530
-        let ctx = this.canvasElement.getContext("2d") as CanvasRenderingContext2D;
+        const ctx = this.canvasElement.getContext("2d") as CanvasRenderingContext2D;
         this.canvasElement.style.width = 100 + "vw";
         this.canvasElement.width = Math.floor(widthPx * scale);
         this.canvasElement.height = Math.floor(heightPx * scale);
@@ -143,7 +143,7 @@ export class Screen {
     showWelcome() {
         this.displayWelcome = true
 
-        let line1 = 'type "help" to see a list of program loading commands'
+        const line1 = 'type "help" to see a list of program loading commands'
         this.cursor.y++;
         this.cursor.x = 0;
         line1.split('').forEach((char) => this.putChar(char))
@@ -158,7 +158,7 @@ export class Screen {
 
     private parseCommand(command: string) {
         if (command === 'ls') {
-            let message = `\npuc         :- A maze chase game
+            const message = `\npuc         :- A maze chase game
 minesweeper :- An explosive puzzle
 snake       :- Party like it's 1999
 connect4    :- Fun for 2
@@ -168,7 +168,7 @@ zpaint      :- A art program\n`
         }
 
         if (command === 'help') {
-            let message = `\nls           :- List programs to load
+            const message = `\nls           :- List programs to load
 load <name>  :- Load a program by "name"
 about        :- About the computer \n
 type E 0100 to return to return to basic after exiting a program\n`
@@ -199,7 +199,7 @@ type E 0100 to return to return to basic after exiting a program\n`
             if (roms.includes(game)) {
                 this.loadRom(game)
             } else {
-                let message = `\nrom ${game} not found\n`
+                const message = `\nrom ${game} not found\n`
                 message.split('').forEach((char) => this.newChar(char))
             }
             return true
@@ -232,23 +232,23 @@ type E 0100 to return to return to basic after exiting a program\n`
         }
 
         //Cursor Pos
-        let cursorPosRegx = /\[([0-9]+)\;([0-9]+)f/;
-        let cursorPos = escape.match(cursorPosRegx);
+        const cursorPosRegx = /\[([0-9]+)\;([0-9]+)f/;
+        const cursorPos = escape.match(cursorPosRegx);
         if (cursorPos) {
-            let x = parseInt(cursorPos[2]) == 0 ? 0 : parseInt(cursorPos[2]) - 1;
-            let y = parseInt(cursorPos[1]) == 0 ? 0 : parseInt(cursorPos[1]) - 1;
+            const x = parseInt(cursorPos[2]) == 0 ? 0 : parseInt(cursorPos[2]) - 1;
+            const y = parseInt(cursorPos[1]) == 0 ? 0 : parseInt(cursorPos[1]) - 1;
             this.cursor = { y: y, x: x }
             return;
         }
         //Colour
-        let colourRegx = /\[([0-9]+)m/;
-        let colour = escape.match(colourRegx);
+        const colourRegx = /\[([0-9]+)m/;
+        const colour = escape.match(colourRegx);
         if (colour) {
             this.setColour(parseInt(colour[1]), this);
             return;
         }
-        let colourRegxMuti = /\[([0-9]+)\;([0-9]+)m/;
-        let colourRegxMatch = escape.match(colourRegxMuti);
+        const colourRegxMuti = /\[([0-9]+)\;([0-9]+)m/;
+        const colourRegxMatch = escape.match(colourRegxMuti);
         if (colourRegxMatch) {
             this.setColour(parseInt(colourRegxMatch[1]), this);
             this.setColour(parseInt(colourRegxMatch[2]), this);
@@ -325,7 +325,7 @@ type E 0100 to return to return to basic after exiting a program\n`
             }
 
             if (char === '\n') {
-                let command = this.commandBuffer
+                const command = this.commandBuffer
                 this.commandBuffer = ""
                 this.commandParsed = this.parseCommand(command)
             }
@@ -337,9 +337,9 @@ type E 0100 to return to return to basic after exiting a program\n`
         this.canvas.fillStyle = Screen.black;
         this.canvas.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 
-        this.canvas.font = "24px Windows Command Prompt, monospace";
+        this.canvas.font = "16px Windows Command Prompt, monospace";
 
-        let screenColour = { r: 0, g: 0, b: 0 }
+        const screenColour = { r: 0, g: 0, b: 0 }
 
         const offset = 1;
         if (this.displayWelcome) {
@@ -356,11 +356,11 @@ type E 0100 to return to return to basic after exiting a program\n`
             return
         }
 
-        let now = new Date();
+        const now = new Date();
         //First draw the background, we have to spit this out so we don't get overdraw
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
-                let char = this.screenBuffer[row][col] || Screen.defaultChar;
+                const char = this.screenBuffer[row][col] || Screen.defaultChar;
                 this.canvas.fillStyle = char.colour.bg
                 this.canvas.fillRect(((col + 1) * CHAR_WIDTH - CHAR_WIDTH) + offset, (row * CHAR_HEIGHT) + offset, CHAR_WIDTH, CHAR_HEIGHT);
             }
@@ -368,7 +368,7 @@ type E 0100 to return to return to basic after exiting a program\n`
         //Now the foreground and cursor
         for (let row = 0; row < this.height; row++) {
             for (let col = 0; col < this.width; col++) {
-                let char = this.screenBuffer[row][col] || Screen.defaultChar;
+                const char = this.screenBuffer[row][col] || Screen.defaultChar;
                 this.canvas.fillStyle = char.colour.fg
                 if (this.cursor.y == row && this.cursor.x == col && this.showCursor && Math.round(now.getTime() / 1000) % 2) {
                     this.canvas.fillRect(((col + 1) * CHAR_WIDTH - CHAR_WIDTH) + offset, (row * CHAR_HEIGHT) + offset, CHAR_WIDTH, CHAR_HEIGHT);
@@ -391,17 +391,17 @@ type E 0100 to return to return to basic after exiting a program\n`
 }
 
 function hexToRgb(hex: string) {
-    let bigint = parseInt(hex.replace('#', ''), 16);
-    let r = (bigint >> 16) & 255;
-    let g = (bigint >> 8) & 255;
-    let b = bigint & 255;
+    const bigint = parseInt(hex.replace('#', ''), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
 
     return { r, g, b };
 }
 
 function rgbToHex(r: number, g: number, b: number) {
     const c = (v: number) => {
-        let hex = Math.floor(v).toString(16);
+        const hex = Math.floor(v).toString(16);
         return hex.length === 1 ? "0" + hex : hex;
     }
     return parseInt(c(r) + c(g) + c(b), 16);

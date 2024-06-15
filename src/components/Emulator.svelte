@@ -156,9 +156,8 @@
 				}, 50);
 			}
 		}
-		screen = new Screen(52, 22, canvas, emulator.loadRomByName);
+		screen = new Screen(70, 33, canvas, emulator.loadRomByName);
 		loop = setInterval(() => screen.draw(), 67);
-
 		worker.postMessage({action: RXType.INIT})
 	});
 

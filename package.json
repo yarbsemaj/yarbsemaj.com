@@ -58,7 +58,7 @@
     "pixi.js": "^6.5.1",
     "sass": "^1.54.3",
     "siema": "^1.5.1",
-    "simple-keyboard": "^3.7.35",
+    "simple-keyboard": "^3.7.86",
     "simplex-noise": "^4.0.0",
     "source-map-support": "^0.5.21",
     "svelte-fa": "^3.0.4",

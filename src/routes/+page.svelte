@@ -64,11 +64,13 @@
 	<ThreeD bind:inputKey />
 </div>
 <div
-	class="bg-black z-10 fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-between {showKeyboard ? 'block' : 'hidden'}"
+	class="bg-black z-20 fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-between {showKeyboard
+		? 'block md:hidden'
+		: 'hidden'}"
 >
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
-	class="pt-10"
+		class="pt-10"
 		id="emuScreen"
 		on:click={() => {
 			showKeyboard = !showKeyboard;
