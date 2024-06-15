@@ -5,15 +5,15 @@ import about2 from "./screen-images/about2.png"
 import about3 from "./screen-images/about3.jpeg"
 import about4 from "./screen-images/about4.png"
 
-const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life', 'threed']
+const roms = ['puc', 'minesweeper', 'snake', 'image', 'banner', 'connect4', 'life', 'threed', 'zpaint']
 
 export type AboutSlide = {
     image: HTMLImageElement
     lightColor: number
 }
 
-const CHAR_HEIGHT = 24;
-const CHAR_WIDTH = 15;
+const CHAR_WIDTH = 10
+const CHAR_HEIGHT = 16
 
 export class Screen {
     static black = "#000000";
@@ -162,7 +162,8 @@ export class Screen {
             let message = `\npuc         :- A maze chase game
 minesweeper :- An explosive puzzle
 snake       :- Party like it's 1999
-connect4    :- Fun for 2\n`
+connect4    :- Fun for 2
+zpaint      :- A art program\n`
             message.split('').forEach((char) => this.newChar(char))
             return true
         }
@@ -371,7 +372,7 @@ type E 0100 to return to return to basic after exiting a program\n`
                 let char = this.screenBuffer[row][col] || Screen.defaultChar;
                 this.canvas.fillStyle = char.colour.fg
                 if (this.cursor.y == row && this.cursor.x == col && this.showCursor && Math.round(now.getTime() / 1000) % 2) {
-                    this.canvas.fillRect(((col + 1) * CHAR_WIDTH - CHAR_WIDTH) + offset, (row * CHAR_HEIGHT + 4) + offset, CHAR_WIDTH, CHAR_HEIGHT);
+                    this.canvas.fillRect(((col + 1) * CHAR_WIDTH - CHAR_WIDTH) + offset, (row * CHAR_HEIGHT) + offset, CHAR_WIDTH, CHAR_HEIGHT);
                 }
                 if (char.txt) {
                     const rgb = hexToRgb(char.colour.fg)
@@ -380,7 +381,7 @@ type E 0100 to return to return to basic after exiting a program\n`
                     screenColour.g += rgb.g
 
                     this.canvas.fillStyle = char.colour.fg
-                    this.canvas.fillText(char.txt, (col * CHAR_WIDTH) + offset, ((row + 1) * CHAR_HEIGHT) + offset);
+                    this.canvas.fillText(char.txt, (col * CHAR_WIDTH) + offset + 1, (((row + 1) * CHAR_HEIGHT) - 3) + offset);
                 }
             }
         }

@@ -5,6 +5,7 @@
 	import { type ROM } from '../emu/component/HAL';
 	import EmulatorWorker from '../workers/emulator?worker'
 	import puc from '../roms/puc.cim';
+	import paint from '../roms/paint.cim';
 	import minesweper from '../roms/minesweeper.cim';
 	import snake from '../roms/snake.cim';
 	import image from '../roms/image.cim';
@@ -30,7 +31,8 @@
 		{ name: 'Banner', start: 0x9000, uri: banner },
 		{ name: 'Connect4', start: 0x9000, uri: connect4 },
 		{ name: 'Life', start: 0x9000, uri: life },
-		{ name: 'threed', start: 0x9000, uri: threed }
+		{ name: 'threed', start: 0x9000, uri: threed },
+		{ name: 'zpaint', start: 0x9000, uri: paint }
 	];
 
 	export const emulator = {
