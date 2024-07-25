@@ -101,7 +101,7 @@
 			<a
 				aria-label="Github"
 				class="sm:text-8xl text-6xl p-4"
-				href="https://github.cnpm run deom/yarbsemaj"
+				href="https://github.com/yarbsemaj"
 			>
 				<Fa icon={faGithub} />
 			</a>

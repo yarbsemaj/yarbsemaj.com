@@ -14,24 +14,25 @@
 				'q w e r t y u i o p {bksp}',
 				'a s d f g h j k l {enter}',
 				'{shift} z x c v b n m , . {shift}',
-				'{alt} {space}'
+				'{alt} {space} {break}'
 			],
 			shift: [
 				'Q W E R T Y U I O P {bksp}',
 				'A S D F G H J K L {enter}',
 				'{shiftactivated} Z X C V B N M , . {shiftactivated}',
-				'{alt} {space}'
+				'{alt} {space} {break}'
 			],
 			alt: [
 				'1 2 3 4 5 6 7 8 9 0 {bksp}',
 				`@ # $ & * ( ) ' " {enter}`,
 				'{shift} % - + = / ; : ! ? {shift}',
-				'{default} {space}'
+				'{default} {space} {break}'
 			]
 		},
 		display: {
 			'{alt}': '.?123',
 			'{shift}': '⇧',
+			'{break}': '⊖',
 			'{shiftactivated}': '⇧',
 			'{enter}': 'return',
 			'{bksp}': '⌫',
@@ -52,8 +53,6 @@
 		});
 
 		function onKeyPress(button) {
-			console.log('Button pressed', button);
-
 			/**
 			 * Handle toggles
 			 */
@@ -70,6 +69,9 @@
 						break;
 					case '{space}':
 						keyPress(' ');
+						break;
+					case '{break}':
+						keyPress(String.fromCharCode(3));
 						break;
 					default:
                         dispatchEvent(new KeyboardEvent('keydown'))
@@ -178,7 +180,7 @@
 	}
 	.hg-button-space {
 		max-width: 448px;
-		min-width: 350px;
+		min-width: 250px;
 	}
 	.simple-keyboard.hg-theme-ios.hg-theme-default .hg-button-enter {
 		max-width: 110px;
