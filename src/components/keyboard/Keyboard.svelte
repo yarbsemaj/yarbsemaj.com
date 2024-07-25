@@ -110,7 +110,7 @@
 	});
 </script>
 
-<div class="text-black">
+<div class="text-green-600">
 	<div class="keyboard" bind:this={keyboardElement} />
 </div>
 
@@ -118,6 +118,14 @@
 	/**
    * hg-theme-default theme
    */
+   .hg-theme-default {
+		background-color: #3c3d33 !important;
+		border-radius: 5px 5px 0 0 !important;
+   }
+   .hg-button{
+	background-color: rgb(0, 0, 0) !important;;
+   }
+
 	.simple-keyboard.hg-theme-ios {
 		width: 750px;
 		margin: auto;
@@ -145,14 +153,14 @@
 		border-radius: 5px;
 	}
 	.simple-keyboard.hg-theme-ios.hg-theme-default.hg-layout-custom {
-		background-color: #e5e5e5;
+		background-color: black;
 		padding: 5px;
 	}
 	.simple-keyboard.hg-theme-ios.hg-theme-default .hg-button {
 		border-radius: 5px;
 		box-sizing: border-box;
 		padding: 0;
-		background: white;
+		background: black;
 		border-bottom: 1px solid #b5b5b5;
 		cursor: pointer;
 		display: flex;
