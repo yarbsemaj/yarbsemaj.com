@@ -111,7 +111,12 @@
 			<a class="sm:text-8xl text-6xl p-4" aria-label="Blog" href="/blog">
 				<Fa icon={faLaptopCode} />
 			</a>
-			<a class="sm:text-8xl text-6xl p-4" aria-label="Mastodon" href="https://me.bray.im/@james">
+			<a
+				class="sm:text-8xl text-6xl p-4"
+				rel="me"
+				aria-label="Mastodon"
+				href="https://me.bray.im/@james"
+			>
 				<Fa icon={faMastodon} />
 			</a>
 		</div>
