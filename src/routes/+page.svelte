@@ -4,8 +4,8 @@
 	import Typewriter from '../components/typewriter/Typewriter.svelte';
 
 	import Fa from 'svelte-fa';
-	import { faLaptopCode, faKeyboard } from '@fortawesome/free-solid-svg-icons';
-	import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+	import { faLaptopCode } from '@fortawesome/free-solid-svg-icons';
+	import { faGithub, faLinkedin, faMastodon } from '@fortawesome/free-brands-svg-icons';
 	import { onMount } from 'svelte';
 	import { check_webp_feature } from '$lib/utils';
 	import Keyboard from '../components/keyboard/Keyboard.svelte';
@@ -98,11 +98,7 @@
 		</div>
 
 		<div class="flex justify-center sm:gap-10 gap-2">
-			<a
-				aria-label="Github"
-				class="sm:text-8xl text-6xl p-4"
-				href="https://github.com/yarbsemaj"
-			>
+			<a aria-label="Github" class="sm:text-8xl text-6xl p-4" href="https://github.com/yarbsemaj">
 				<Fa icon={faGithub} />
 			</a>
 			<a
@@ -114,6 +110,9 @@
 			</a>
 			<a class="sm:text-8xl text-6xl p-4" aria-label="Blog" href="/blog">
 				<Fa icon={faLaptopCode} />
+			</a>
+			<a class="sm:text-8xl text-6xl p-4" aria-label="Mastodon" href="https://me.bray.im/@james">
+				<Fa icon={faMastodon} />
 			</a>
 		</div>
 	</div>
