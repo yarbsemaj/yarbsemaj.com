@@ -108,7 +108,7 @@
 			>
 				<Fa icon={faLinkedin} />
 			</a>
-			<a class="sm:text-8xl text-6xl p-4" aria-label="Blog" href="/blog">
+			<a class="sm:text-8xl text-6xl p-4" aria-label="Blog" href="https://blog.yarbsemaj.com">
 				<Fa icon={faLaptopCode} />
 			</a>
 			<a
