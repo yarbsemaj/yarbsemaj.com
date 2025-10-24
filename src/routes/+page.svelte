@@ -86,7 +86,7 @@
 <div class="h-screen flex flex-col justify-center items-center z-10 relative">
 	<div class="text-center px-2">
 		<h1
-			class="md:text-9xl text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-zinc-100 to-stone-400"
+			class="md:text-9xl text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-br from-zinc-100 to-stone-400"
 		>
 			Hello there!
 		</h1>

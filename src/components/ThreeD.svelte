@@ -1,13 +1,13 @@
 <script lang="ts">
-	import * as THREE from 'three';
-	import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-	import { CrtShader } from '../threed/crtShader';
-	import { browser } from '$app/environment';
-	import Emulator from '../components/Emulator.svelte';
-	import { onDestroy, onMount } from 'svelte';
-	import Loader from './loader/Loader.svelte';
-	import { screenColorHex, romLoaded } from './store/store';
+	import * as THREE from "three";
+	import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+	import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+	import { CrtShader } from "../threed/crtShader";
+	import { browser } from "$app/environment";
+	import Emulator from "../components/Emulator.svelte";
+	import { onDestroy, onMount } from "svelte";
+	import Loader from "./loader/Loader.svelte";
+	import { screenColorHex, romLoaded } from "./store/store";
 
 	let screenColor: number;
 
@@ -18,7 +18,7 @@
 	let emuCanvas: HTMLCanvasElement;
 	let canvas: HTMLCanvasElement;
 	let y: number;
-	let canvasPosition = 'fixed';
+	let canvasPosition = "fixed";
 	let top = 0;
 	let opacity = 1;
 	let blur = 0;
@@ -35,7 +35,7 @@
 	});
 
 	if (browser) {
-		emuCanvas = document.createElement('canvas');
+		emuCanvas = document.createElement("canvas");
 	}
 
 	export const inputKey = (key: string) => {
@@ -45,12 +45,16 @@
 	};
 
 	const onScroll = () => {
-		canvasPosition = 'fixed';
+		canvasPosition = "fixed";
 		top = 0;
 		if (y > canvas.clientHeight) {
 			const scaleFactor = window.innerWidth > 768 ? 1.2 : 2;
-			opacity = 1 - ((y - canvas.clientHeight) * scaleFactor) / canvas.clientHeight;
-			blur = ((y - canvas.clientHeight) * scaleFactor * 8) / canvas.clientHeight;
+			opacity =
+				1 -
+				((y - canvas.clientHeight) * scaleFactor) / canvas.clientHeight;
+			blur =
+				((y - canvas.clientHeight) * scaleFactor * 8) /
+				canvas.clientHeight;
 			if (opacity < 0.3) opacity = 0.3;
 			if (blur > 5) blur = 5;
 		} else {
@@ -86,9 +90,12 @@
 			fragmentShader: CrtShader.fragmentShader,
 			uniforms: {
 				tDiffuse: { value: texture },
-				iResolution: { type: 'vec2', value: new THREE.Vector2(6000, 3000) },
-				shadowMask: { value: window.innerWidth > 1200 ? 3 : 0 }
-			}
+				iResolution: {
+					type: "vec2",
+					value: new THREE.Vector2(6000, 3000),
+				},
+				shadowMask: { value: window.innerWidth > 1200 ? 3 : 0 },
+			},
 		});
 
 		material.onBeforeCompile(CrtShader, renderer);
@@ -97,7 +104,12 @@
 
 		//Setup basic scene
 		const scene = new THREE.Scene();
-		camera = new THREE.PerspectiveCamera(0.2, window.innerWidth / canvas.clientHeight, 0.1, 100);
+		camera = new THREE.PerspectiveCamera(
+			0.2,
+			window.innerWidth / canvas.clientHeight,
+			0.1,
+			100,
+		);
 
 		const light = new THREE.AmbientLight(0x303030); // soft white light
 		scene.add(light);
@@ -126,13 +138,15 @@
 		// Load the Model
 		const dloader = new DRACOLoader();
 
-		dloader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+		dloader.setDecoderPath(
+			"https://www.gstatic.com/draco/versioned/decoders/1.5.6/",
+		);
 
 		dloader.preload();
 		const loader = new GLTFLoader();
 		loader.setDRACOLoader(dloader);
 
-		loader.load('/retro_computer_compressed.glb', (gltf) => {
+		loader.load("/retro_computer_compressed.glb", (gltf) => {
 			gltf.scene.children[2].material = material;
 			const model = gltf.scene;
 			model.add(screenSpot);
@@ -162,7 +176,8 @@
 			screenGlow.color.set(screenColor);
 			screenSpot.color.set(screenColor);
 
-			const boundedScrollY = y > canvas.clientHeight ? canvas.clientHeight : y;
+			const boundedScrollY =
+				y > canvas.clientHeight ? canvas.clientHeight : y;
 			let baseZ: number, zscale: number, baseY: number;
 
 			if (window.innerWidth > 1200) {
@@ -191,19 +206,23 @@
 	});
 	$: if (modelLoaded && romLoading) {
 		emulator.init();
-		document.getElementById('emuScreen').appendChild(emuCanvas)
+		document.getElementById("emuScreen").appendChild(emuCanvas);
 	}
 </script>
 
 {#if !modelLoaded || !romLoading}
-	<div class="fixed z-20 top-0 left-0 bottom-0 right-0 bg-black flex justify-center items-center">
+	<div
+		class="fixed z-20 top-0 left-0 bottom-0 right-0 bg-black flex justify-center items-center"
+	>
 		<Loader />
 	</div>
 {/if}
 
 <Emulator bind:emulator canvas={emuCanvas} />
 <svelte:window on:resize={onResize} bind:scrollY={y} on:scroll={onScroll} />
-<div style="position: {canvasPosition}; top:{top}px; opacity:{opacity}; filter:blur({blur}px)">
-	<canvas class="!h-full-screen" bind:this={canvas} />
+<div
+	style="position: {canvasPosition}; top:{top}px; opacity:{opacity}; filter:blur({blur}px)"
+>
+	<canvas class="h-screen!" bind:this={canvas}></canvas>
 </div>
-<div class="md:h-[170vh] h-[130vh]" />
+<div class="md:h-[170vh] h-[130vh]"></div>
