@@ -223,6 +223,6 @@
 <div
 	style="position: {canvasPosition}; top:{top}px; opacity:{opacity}; filter:blur({blur}px)"
 >
-	<canvas class="h-screen!" bind:this={canvas}></canvas>
+	<canvas class="h-lvh!" bind:this={canvas}></canvas>
 </div>
 <div class="md:h-[170vh] h-[130vh]"></div>

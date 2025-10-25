@@ -1,38 +1,8 @@
-# sv
+# Blog and Portfolio
+<img width="1649" alt="image" src="https://github.com/yarbsemaj/yarbsemaj.com/assets/17494632/cb00f0e0-8a23-4e72-8089-8638ca6a403a">
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## Creating a project
+A wrapper for my [Z80 Emulator](https://github.com/yarbsemaj/z80-sbc-emu), this project extends that by rendering the output to a texture and then placing that texture onto the screen of a [computer model](https://skfb.ly/ou69O") using three.js
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Demo
+[james.bray.im](https://james.bray.im/)
