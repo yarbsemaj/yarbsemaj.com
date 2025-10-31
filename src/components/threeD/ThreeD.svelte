@@ -148,7 +148,7 @@
 		//Spotlight
 		const screenSpot = new THREE.SpotLight(0xffffff, 1);
 		screenSpot.position.set(-0.012, 0.0025, 0);
-		screenSpot.angle = 0.5;
+		screenSpot.angle = 0.46;
 		screenSpot.penumbra = 1;
 		screenSpot.decay = 2;
 		screenSpot.distance = 0.023;
