@@ -4,5 +4,5 @@
 </script>
 
 <main>
-	<slot />
+	{@render children?.()}
 </main>

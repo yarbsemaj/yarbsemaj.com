@@ -2,16 +2,22 @@
 	import * as THREE from "three";
 	import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 	import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-	import { CrtShader } from "../threed/crtShader";
+	import { CrtShader } from "../../threed/crtShader";
 	import { browser } from "$app/environment";
-	import Emulator from "../components/Emulator.svelte";
+	import Emulator from "../Emulator.svelte";
 	import { onDestroy, onMount } from "svelte";
-	import Loader from "./loader/Loader.svelte";
-	import { screenColorHex, romLoaded } from "./store/store";
+	import Loader from "../loader/Loader.svelte";
+	import { screenColorHex, romLoaded } from "../store/store";
+	import { darkModeConfig, lightModeConfig } from "./config";
 
 	let screenColor: number;
+	let darkMode = false;
 
 	screenColorHex.subscribe((value) => {
+		console.log(
+			"Screen color hex changed:",
+			value.toString(16).padStart(6, "0"),
+		);
 		screenColor = value;
 	});
 
@@ -100,8 +106,6 @@
 
 		material.onBeforeCompile(CrtShader, renderer);
 
-		const mesh = new THREE.Mesh(geo, material);
-
 		//Setup basic scene
 		const scene = new THREE.Scene();
 		camera = new THREE.PerspectiveCamera(
@@ -115,11 +119,11 @@
 		scene.add(light);
 
 		//Spotlight
-		const spotLight = new THREE.SpotLight(0xffffff, 100);
-		spotLight.position.set(0, 5, 0);
-		spotLight.angle = Math.PI / 6;
-		spotLight.penumbra = 1;
-		spotLight.decay = 3;
+		const spotLight = new THREE.SpotLight(0xffffff);
+		spotLight.position.set(0, 1, 0);
+		spotLight.angle = 0.05;
+		spotLight.penumbra = 0;
+		spotLight.decay = 2;
 		spotLight.distance = 0;
 
 		scene.add(spotLight);
@@ -129,12 +133,13 @@
 		screenSpot.position.set(-0.012, 0.0025, 0);
 		screenSpot.angle = 0.5;
 		screenSpot.penumbra = 1;
-		screenSpot.decay = 0.6;
-		screenSpot.distance = 0;
+		screenSpot.decay = 2;
+		screenSpot.distance = 0.023;
+		screenSpot.map = texture;
 
 		const screenGlow = new THREE.PointLight(screenColor, 0.004, 0.007);
 		screenGlow.position.set(0.0025, 0.0025, 0);
-		2650;
+
 		// Load the Model
 		const dloader = new DRACOLoader();
 
@@ -147,6 +152,7 @@
 		loader.setDRACOLoader(dloader);
 
 		loader.load("/retro_computer_compressed.glb", (gltf) => {
+			//Assign the emu screen material
 			gltf.scene.children[2].material = material;
 			const model = gltf.scene;
 			model.add(screenSpot);
@@ -160,10 +166,6 @@
 		});
 		renderer.setSize(window.innerWidth, canvas.clientHeight);
 		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.shadowMap.enabled = true;
-
-		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
 		camera.position.y = 0.00235;
 
 		function animate(gltf) {
@@ -179,6 +181,10 @@
 			const boundedScrollY =
 				y > canvas.clientHeight ? canvas.clientHeight : y;
 			let baseZ: number, zscale: number, baseY: number;
+
+			const modeConfig = darkMode ? darkModeConfig : lightModeConfig;
+			spotLight.intensity = modeConfig.spotlightIntensity;
+			light.intensity = modeConfig.ambientLightIntensity;
 
 			if (window.innerWidth > 1200) {
 				baseZ = 2;
@@ -206,7 +212,7 @@
 	});
 	$: if (modelLoaded && romLoading) {
 		emulator.init();
-		document.getElementById("emuScreen").appendChild(emuCanvas);
+		document.getElementById("emuScreen")?.appendChild(emuCanvas);
 	}
 </script>
 

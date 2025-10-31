@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ThreeD from "../components/ThreeD.svelte";
+	import ThreeD from "../components/threeD/ThreeD.svelte";
 	import type { TypedItem } from "../components/typewriter/types";
 	import Typewriter from "../components/typewriter/Typewriter.svelte";
 
@@ -64,6 +64,8 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
+	role="button"
+	tabindex="0"
 	on:click={() => {
 		showKeyboard = !showKeyboard;
 	}}
@@ -77,12 +79,12 @@
 >
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
-		class="pt-10"
-		id="emuScreen"
+		role="button"
+		tabindex="0"
 		on:click={() => {
 			showKeyboard = !showKeyboard;
 		}}
-	/>
+	></div>
 	<div class="">
 		{#if showKeyboard}
 			<Keyboard keyPress={inputKey} />
