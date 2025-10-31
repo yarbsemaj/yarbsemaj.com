@@ -1,4 +1,4 @@
-import { screenColorHex } from "../../components/store/store";
+import { inUserMode, screenColorHex } from "../../components/store/store";
 import welcome from "./screen-images/welcome.png"
 import about1 from "./screen-images/about1.png"
 import about2 from "./screen-images/about2.png"
@@ -176,13 +176,13 @@ type E 0100 to return to return to basic after exiting a program\n`
             return true
         }
 
-        if(command === 'about'){
+        if (command === 'about') {
             this.aboutSlide = 1
             //add keyboard listener
-            const aboutKeyboardListener = (event: KeyboardEvent)=>{
+            const aboutKeyboardListener = (event: KeyboardEvent) => {
                 event.preventDefault()
-                this.aboutSlide ++
-                if(this.aboutSlide-1 === this.about.length){
+                this.aboutSlide++
+                if (this.aboutSlide - 1 === this.about.length) {
                     this.aboutSlide = 0
                     window.removeEventListener('keydown', aboutKeyboardListener)
                 }
@@ -271,6 +271,7 @@ type E 0100 to return to return to basic after exiting a program\n`
 
     newChar(char: string) {
         if (this.displayWelcome) {
+            inUserMode.set(true);
             this.displayWelcome = false
             return
         }
@@ -350,7 +351,7 @@ type E 0100 to return to return to basic after exiting a program\n`
 
 
         if (this.aboutSlide) {
-            const slide = this.about[this.aboutSlide-1]
+            const slide = this.about[this.aboutSlide - 1]
             this.canvas.drawImage(slide.image, offset, offset)
             screenColorHex.set(slide.lightColor)
             return

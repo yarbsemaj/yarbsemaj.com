@@ -26,3 +26,15 @@ export function check_webp_feature(feature: string, callback: (feature: string, 
     };
     img.src = 'data:image/webp;base64,' + kTestImages[feature];
 }
+
+export function animateValue(startTime: number, startValue: number, endValue: number, animationDuration: number) {
+    var currentTime = Date.now();
+    var elapsedTime = currentTime - startTime;
+
+    if (elapsedTime < animationDuration) {
+
+        return { value: ((elapsedTime / animationDuration) * (endValue - startValue)) + startValue, isAnimating: true };
+    } else {
+        return { value: endValue, isAnimating: false };
+    }
+}

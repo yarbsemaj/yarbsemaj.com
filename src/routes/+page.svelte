@@ -79,6 +79,8 @@
 >
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
+		class="pt-10"
+		id="emuScreen"
 		role="button"
 		tabindex="0"
 		on:click={() => {
@@ -141,7 +143,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="text-center text-sm pb-2 absolute bottom-0 text-gray-400">
+	<div class="text-center text-sm pb-2 absolute bottom-0 text-gray-500">
 		<a class="underline" href="https://skfb.ly/ou69O"
 			>Retro computer model by Urpo,
 		</a> modify by James Bray

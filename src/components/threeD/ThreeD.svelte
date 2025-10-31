@@ -7,18 +7,29 @@
 	import Emulator from "../Emulator.svelte";
 	import { onDestroy, onMount } from "svelte";
 	import Loader from "../loader/Loader.svelte";
-	import { screenColorHex, romLoaded } from "../store/store";
+	import { screenColorHex, romLoaded, inUserMode } from "../store/store";
 	import { darkModeConfig, lightModeConfig } from "./config";
+	import { animateValue } from "$lib/utils";
 
 	let screenColor: number;
-	let darkMode = false;
+	let darkMode = true;
+	let inUserModeTime: number;
+	let animateSpotlight = false;
+	let animateAmbientLight = false;
 
 	screenColorHex.subscribe((value) => {
-		console.log(
-			"Screen color hex changed:",
-			value.toString(16).padStart(6, "0"),
-		);
 		screenColor = value;
+	});
+
+	inUserMode.subscribe((value) => {
+		darkMode = !value;
+		if (value) {
+			setTimeout(() => {
+				inUserModeTime = Date.now();
+				animateSpotlight = true;
+				animateAmbientLight = true;
+			}, 500);
+		}
 	});
 
 	let emuCanvas: HTMLCanvasElement;
@@ -115,11 +126,17 @@
 			100,
 		);
 
-		const light = new THREE.AmbientLight(0x303030); // soft white light
+		const light = new THREE.AmbientLight(
+			0x303030,
+			darkModeConfig.ambientLightIntensity,
+		); // soft white light
 		scene.add(light);
 
 		//Spotlight
-		const spotLight = new THREE.SpotLight(0xffffff);
+		const spotLight = new THREE.SpotLight(
+			0xffffff,
+			darkModeConfig.spotlightIntensity,
+		);
 		spotLight.position.set(0, 1, 0);
 		spotLight.angle = 0.05;
 		spotLight.penumbra = 0;
@@ -182,9 +199,30 @@
 				y > canvas.clientHeight ? canvas.clientHeight : y;
 			let baseZ: number, zscale: number, baseY: number;
 
-			const modeConfig = darkMode ? darkModeConfig : lightModeConfig;
-			spotLight.intensity = modeConfig.spotlightIntensity;
-			light.intensity = modeConfig.ambientLightIntensity;
+			if (animateSpotlight) {
+				const animationValue = animateValue(
+					inUserModeTime,
+					darkModeConfig.spotlightIntensity,
+					lightModeConfig.spotlightIntensity,
+					2000, //Animate over 2 seconds
+				);
+				spotLight.intensity = animationValue.value;
+				if (!animationValue.isAnimating) {
+					animateSpotlight = false;
+				}
+			}
+			if (animateAmbientLight) {
+				const animationValue = animateValue(
+					inUserModeTime,
+					darkModeConfig.ambientLightIntensity,
+					lightModeConfig.ambientLightIntensity,
+					2000, //Animate over 2 seconds
+				);
+				light.intensity = animationValue.value;
+				if (!animationValue.isAnimating) {
+					animateAmbientLight = false;
+				}
+			}
 
 			if (window.innerWidth > 1200) {
 				baseZ = 2;
