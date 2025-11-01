@@ -12,7 +12,7 @@
 	import { animateValue } from "$lib/utils";
 
 	let screenColor: number;
-	let darkMode = true;
+	let darkMode = false;
 	let inUserModeTime: number;
 	let animateSpotlight = false;
 	let animateAmbientLight = false;
@@ -22,8 +22,8 @@
 	});
 
 	inUserMode.subscribe((value) => {
-		darkMode = !value;
-		if (value) {
+		if (value && darkMode) {
+			darkMode = !value;
 			setTimeout(() => {
 				inUserModeTime = Date.now();
 				animateSpotlight = true;
@@ -97,6 +97,7 @@
 
 	onMount(() => {
 		renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+		darkMode = window.innerWidth > 1200;
 
 		//Load EMUc Screen into texture
 		const texture = new THREE.CanvasTexture(emuCanvas);
@@ -128,14 +129,18 @@
 
 		const light = new THREE.AmbientLight(
 			0x303030,
-			darkModeConfig.ambientLightIntensity,
+			darkMode
+				? darkModeConfig.ambientLightIntensity
+				: lightModeConfig.ambientLightIntensity,
 		); // soft white light
 		scene.add(light);
 
 		//Spotlight
 		const spotLight = new THREE.SpotLight(
 			0xffffff,
-			darkModeConfig.spotlightIntensity,
+			darkMode
+				? darkModeConfig.spotlightIntensity
+				: lightModeConfig.spotlightIntensity,
 		);
 		spotLight.position.set(0, 1, 0);
 		spotLight.angle = 0.05;
