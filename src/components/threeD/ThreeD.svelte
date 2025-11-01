@@ -151,7 +151,10 @@
 		scene.add(spotLight);
 
 		//Spotlight
-		const screenSpot = new THREE.SpotLight(0xffffff, 0.4);
+		const screenSpot = new THREE.SpotLight(
+			0xffffff,
+			window.innerWidth > 1200 ? 0.8 : 0.4,
+		);
 		screenSpot.position.set(-0.012, 0.0025, 0);
 		screenSpot.angle = 0.43;
 		screenSpot.penumbra = 1;
