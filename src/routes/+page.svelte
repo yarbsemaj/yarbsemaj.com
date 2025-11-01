@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ThreeD from "../components/ThreeD.svelte";
+	import ThreeD from "../components/threeD/ThreeD.svelte";
 	import type { TypedItem } from "../components/typewriter/types";
 	import Typewriter from "../components/typewriter/Typewriter.svelte";
 
@@ -82,7 +82,7 @@
 		on:click={() => {
 			showKeyboard = !showKeyboard;
 		}}
-	/>
+	></div>
 	<div class="">
 		{#if showKeyboard}
 			<Keyboard keyPress={inputKey} />
@@ -139,7 +139,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="text-center text-sm pb-2 absolute bottom-0 text-gray-400">
+	<div class="text-center text-sm pb-2 absolute bottom-0 text-gray-500">
 		<a class="underline" href="https://skfb.ly/ou69O"
 			>Retro computer model by Urpo,
 		</a> modify by James Bray

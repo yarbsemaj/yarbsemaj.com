@@ -118,7 +118,7 @@
 </script>
 
 <div class="text-green-600">
-	<div class="keyboard" bind:this={keyboardElement} />
+	<div class="keyboard" bind:this={keyboardElement}></div>
 </div>
 
 <style lang="css">
