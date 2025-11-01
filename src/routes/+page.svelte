@@ -64,8 +64,6 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	role="button"
-	tabindex="0"
 	on:click={() => {
 		showKeyboard = !showKeyboard;
 	}}
@@ -81,8 +79,6 @@
 	<div
 		class="pt-10"
 		id="emuScreen"
-		role="button"
-		tabindex="0"
 		on:click={() => {
 			showKeyboard = !showKeyboard;
 		}}
