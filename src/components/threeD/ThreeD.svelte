@@ -148,7 +148,7 @@
 		//Spotlight
 		const screenSpot = new THREE.SpotLight(0xffffff, 1);
 		screenSpot.position.set(-0.012, 0.0025, 0);
-		screenSpot.angle = 0.46;
+		screenSpot.angle = 0.43;
 		screenSpot.penumbra = 1;
 		screenSpot.decay = 2;
 		screenSpot.distance = 0.023;
@@ -175,7 +175,7 @@
 			model.add(screenSpot);
 			model.add(screenGlow);
 			scene.add(model);
-			screenSpot.target.position.set(0.0025, 0.0025, 0);
+			screenSpot.target.position.set(0.0025, 0.0017, -0.00017);
 			model.add(screenSpot.target);
 			animate(model);
 			modelLoaded = true;
