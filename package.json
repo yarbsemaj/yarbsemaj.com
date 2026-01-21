@@ -25,7 +25,7 @@
 		"tailwindcss": "^4.1.16",
 		"typescript": "^5.9.2",
 		"vite": "^7.1.7",
-		"wrangler": "^4.45.0"
+		"wrangler": "^4.59.3"
 	},
 	"dependencies": {
 		"@fortawesome/free-brands-svg-icons": "^6.5.1",
